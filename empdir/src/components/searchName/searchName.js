@@ -10,8 +10,8 @@ const searchName = () => {
                 <input>
                 className="form-control mr-sm-2"
                 type="search"
-                placeholder="name"
-                area-label="name"
+                placeholder="search"
+                area-label="search"
                 onChange={e => context.handleSearch(e)}
                 </input>
                 <button className="btn my-3 my-sm-0" type="submit">
