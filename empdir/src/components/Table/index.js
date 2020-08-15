@@ -8,9 +8,9 @@ export default function Table(props){
                 <th>image</th>
                 <th>
                     <button
-                    onClick={() => this.sortBy('name')}
+                    onClick={() => props.sortBy("Name")}
                     >
-                    name
+                    Name
                     </button>
                     </th>
                 <th>email</th>
@@ -19,7 +19,7 @@ export default function Table(props){
             </thead>
             <tbody>
             {
-                props.Employees.map(row =>(
+                props.data.map(row =>(
                     <tr>
                         <th scope = "row">< img src={row.image}/></th>
                         <td>{row.name}</td>

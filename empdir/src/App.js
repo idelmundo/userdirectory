@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "./components/Table";
 import "./App.css";
-import Employees from "./employees.json"
+import data from "./employees.json"
 
 
 class App extends React.Component {
@@ -9,37 +9,86 @@ class App extends React.Component {
     // sort employee by alphabetical 
     super(props)
     this.state = {
-      Employees: Employees,
-      dirextion: "asc",
+      data: data,
+      datas: data,
       search: ""
     }
-    // this.sortBy = this.sortBy.bind(this)
+
   }
-  compareBy(key) {
-    return function (a, b) {
-      if (""+a[key]<(""+b[key])) return -1;
-      if (""+a[key]>(""+b[key])) return 1;
-      return 0;
-    };}
-    
-    sortBy(key) {
-    let arrayCopy = [...this.state.Employees];
-    arrayCopy.sort(this.compareBy(key));
-    //arrayCopy.reverse(); for descending
-    this.setState({Employees: arrayCopy});
-    } 
-    
-  // sortBy(key){
-  //   console.log(key)
-  //   this.setState({
-  //   name: Employees.sort ( (a, b) => a[key] < b[key] )
-  //   })
-  // }
-// functional search bar
   
+  function compareValue(key, order = "asc") {
+    return function sortBykey(a, b) {
+        const varA = (typeof a[key] === "String") ? a[key].toUpperCase() : a[key];
+        const varB = (typeof b[key] === "String") ? b[key].toUpperCase() : b[key];
+
+        let compare = 0;
+        if (varA > varB) {
+            compare = 1
+        }
+        else if (varA < varB) {
+            compare = -1
+        }
+        return (
+            (order === "desc") ? (compare * -1) : compare
+        )
+    }
+}
+  //this works one way only 
+  // sortBy = () => {
+  //   var newArr = this.state.data
+  //   console.log(newArr)
+  //   for (var i = 0; i < newArr.length; i++) {
+  //     for (var j = 0; j < newArr.length; j++) {
+  //       if (newArr[i].name < newArr[j].name) {
+  //         var temp = newArr[i]
+  //         newArr[i] = newArr[j]
+  //         newArr[j] = temp
+
+  //       } 
+        // else { 
+        //   for (var i = 0; i < newArr.length; i++){
+        //     for (var j = 0; j < newArr.length; j++){
+        //       if (newArr[i].name < newArr[j].name){
+        //         var temp2 = newArr[i]
+        //         newArr[i] = newArr[j]
+        //         newArr[j]= temp2
+        //       }
+        //     }
+        //   }
+        // } 
+      
+
+  //     }
+  //     this.setState({ data: data })
+  //   }
+  // }
+ //this works one way only   
+  
+
+  
+// functional search bar
+lookFor =(event) => {
+  const searchValue = event.target.value;
+  if (searchValue === '') {
+    this.setState({
+    data: this.state.datas
+    })
+  }
+  else{
+    this.setState({
+      data: this.setState.datas.lookFor(data => {
+        if(data.name.include(searchValue)){
+        return true
+      } else {
+        return false
+      }
+      })
+    })
+  }
+}
  
 
-
+// front end
   render () {
     return(
       <div>
@@ -52,6 +101,7 @@ class App extends React.Component {
                     type="search"
                     placeholder="Name"
                     aria-label="Search"
+                    onChange= {this.lookFor}
                 />
                 <button className="btn my-2 my-sm-0" type="submit">
                     Search
@@ -67,7 +117,7 @@ class App extends React.Component {
     <div
       className="page-container"> 
       <Table 
-      Employees={this.state.Employees}
+      data={this.state.data}
       sortBy={this.sortBy}
       />
     </div>
