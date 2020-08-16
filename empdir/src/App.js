@@ -6,85 +6,63 @@ import data from "./employees.json"
 
 class App extends React.Component {
   constructor(props){
-    // sort employee by alphabetical 
     super(props)
     this.state = {
-      data: data,
-      datas: data,
-      search: ""
+      filteredData: data,
+      rawData: data,
+      search: "",
+      sortedDirection: null,
     }
 
   }
-  
-  function compareValue(key, order = "asc") {
-    return function sortBykey(a, b) {
-        const varA = (typeof a[key] === "String") ? a[key].toUpperCase() : a[key];
-        const varB = (typeof b[key] === "String") ? b[key].toUpperCase() : b[key];
-
-        let compare = 0;
-        if (varA > varB) {
-            compare = 1
-        }
-        else if (varA < varB) {
-            compare = -1
-        }
-        return (
-            (order === "desc") ? (compare * -1) : compare
-        )
-    }
-}
-  //this works one way only 
-  // sortBy = () => {
-  //   var newArr = this.state.data
-  //   console.log(newArr)
-  //   for (var i = 0; i < newArr.length; i++) {
-  //     for (var j = 0; j < newArr.length; j++) {
-  //       if (newArr[i].name < newArr[j].name) {
-  //         var temp = newArr[i]
-  //         newArr[i] = newArr[j]
-  //         newArr[j] = temp
-
-  //       } 
-        // else { 
-        //   for (var i = 0; i < newArr.length; i++){
-        //     for (var j = 0; j < newArr.length; j++){
-        //       if (newArr[i].name < newArr[j].name){
-        //         var temp2 = newArr[i]
-        //         newArr[i] = newArr[j]
-        //         newArr[j]= temp2
-        //       }
-        //     }
-        //   }
-        // } 
+ 
+  sortBy = () => {
+    // if the state has sortedDirection then sort the other direcation and save it
+    // if the state does not have sorted direction then just fucking sort it and save that.
+    
+    const data = this.state.rawData;
+    
+    // Look at the state
+    if (this.state.sortedDirection === 'd')  {
+      // sort it up
+      const sortedData = data.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1);
       
+      // then set state with sorted data and sortedDirection as up
+      this.setState({filteredData: sortedData, sortedDirection: 'u' });
+    } else {
+      // sort it  down
+      const sortedData = data.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+    
+      // then set state with sorted data and sortedDirection as down
+      this.setState({filteredData: sortedData, sortedDirection: 'd' });
+    }
 
-  //     }
-  //     this.setState({ data: data })
-  //   }
-  // }
+  }
+
  //this works one way only   
   
 
   
 // functional search bar
-lookFor =(event) => {
-  const searchValue = event.target.value;
-  if (searchValue === '') {
-    this.setState({
-    data: this.state.datas
-    })
-  }
-  else{
-    this.setState({
-      data: this.setState.datas.lookFor(data => {
-        if(data.name.include(searchValue)){
-        return true
-      } else {
-        return false
-      }
-      })
-    })
-  }
+filter =(event) => {
+//   const searchValue = event.target.value;
+//   if (searchValue === '') {
+//     this.setState({
+//     data: this.state.datas
+//     })
+//   }
+//   else{
+//     this.setState({
+//       data: this.setState.datas.filter(data => {
+//         if(data.name.include(searchValue)){
+//         return true
+        
+//       } else {
+//         return false
+//       }
+//       })
+//     })
+//   }
 }
  
 
@@ -101,13 +79,13 @@ lookFor =(event) => {
                     type="search"
                     placeholder="Name"
                     aria-label="Search"
-                    onChange= {this.lookFor}
+                    onChange= {this.filter}
                 />
                 <button className="btn my-2 my-sm-0" type="submit">
                     Search
                  </button>
             </form>
-        </div>
+            </div>
             </div>
         </nav>
         <div className="header">
@@ -117,12 +95,13 @@ lookFor =(event) => {
     <div
       className="page-container"> 
       <Table 
-      data={this.state.data}
+      data={this.state.filteredData}
       sortBy={this.sortBy}
+  
       />
     </div>
     </div>
     )
-}
+  }
 }
 export default App

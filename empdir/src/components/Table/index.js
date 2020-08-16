@@ -8,7 +8,7 @@ export default function Table(props){
                 <th>image</th>
                 <th>
                     <button
-                    onClick={() => props.sortBy("Name")}
+                    onClick={() => props.sortBy()}
                     >
                     Name
                     </button>
@@ -20,8 +20,8 @@ export default function Table(props){
             <tbody>
             {
                 props.data.map(row =>(
-                    <tr>
-                        <th scope = "row">< img src={row.image}/></th>
+                    <tr key={row.id}>
+                        <th scope = "row">< img alt="" src={row.image}/></th>
                         <td>{row.name}</td>
                         <td>{row.email}</td>
                         <td>{row.number}</td>
