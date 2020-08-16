@@ -18,7 +18,7 @@ class App extends React.Component {
  
   sortBy = () => {
     // if the state has sortedDirection then sort the other direcation and save it
-    // if the state does not have sorted direction then just fucking sort it and save that.
+    // if the state does not have sorted direction then just sort it and save that.
     
     const data = this.state.rawData;
     
@@ -45,7 +45,18 @@ class App extends React.Component {
   
 // functional search bar
 filter =(event) => {
-//   const searchValue = event.target.value;
+
+// take the search string aka searchValue!
+const searchValue = event.target.value;
+console.log (searchValue)
+// go throught the raw data
+
+// find the one that match 
+
+
+// set state to the ones we found in filtred data 
+
+  
 //   if (searchValue === '') {
 //     this.setState({
 //     data: this.state.datas
